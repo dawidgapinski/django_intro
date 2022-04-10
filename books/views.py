@@ -23,6 +23,27 @@ def get_uuids_b(request: WSGIRequest) -> JsonResponse:
     return JsonResponse({"uuids":uuids})
 
 def get_argument_from_path(request: WSGIRequest, x: int, y: str, z: str) -> HttpResponse:
-
-
     return HttpResponse(f"X = {x}, Y = {y}, Z = {z}")
+
+
+def get_arguments_from_query(request: WSGIRequest) -> HttpResponse:
+    a = request.GET.get("a")
+    b = request.GET.get("b")
+    c = request.GET.get("c")
+    print(type(int("a")))
+    return HttpResponse(f"a = {a}, b = {b}, c = {c}")
+
+# 15. Przygotuj funkcję drukująca odpowiedni komunikat dla method HTTP takich jak GET, POST, PUT, DELETE
+
+def check_http_query_type(request: WSGIRequest) -> HttpResponse:
+    query_type = "Unknown"
+    if request.method == "GET":
+        query_type = "This is GET"
+    elif request.method == "POST":
+        query_type = "This is POST"
+    elif request.method == "This is PUT":
+        query_type = "This is PUT"
+    elif request.method == "This is DELETE":
+        query_type = "This is DELETE"
+
+    return HttpResponse(query_type)
