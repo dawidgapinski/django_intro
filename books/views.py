@@ -1,8 +1,11 @@
 from uuid import uuid4
 
+from django.core.exceptions import BadRequest
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+
 
 def get_hello(request: WSGIRequest) -> HttpResponse:
     return HttpResponse("hello world")
@@ -35,6 +38,7 @@ def get_arguments_from_query(request: WSGIRequest) -> HttpResponse:
 
 # 15. Przygotuj funkcję drukująca odpowiedni komunikat dla method HTTP takich jak GET, POST, PUT, DELETE
 
+@csrf_exempt
 def check_http_query_type(request: WSGIRequest) -> HttpResponse:
     query_type = "Unknown"
     if request.method == "GET":
@@ -45,5 +49,18 @@ def check_http_query_type(request: WSGIRequest) -> HttpResponse:
         query_type = "This is PUT"
     elif request.method == "This is DELETE":
         query_type = "This is DELETE"
-
     return HttpResponse(query_type)
+
+# 21. Przygotuj funkcję, która zwróci informację o headerach HTTP
+def get_headers(request: WSGIRequest) -> JsonResponse:
+    our_headers = request.headers
+
+    return JsonResponse({"headers": dict(our_headers)})
+
+# 22. Rzuć wyjątkiem HTTP
+
+@csrf_exempt
+def raise_error_for_fun(request: WSGIRequest) -> HttpResponse:
+    if request.method != "GET":
+        raise BadRequest("Method not allowed")
+    return HttpResponse("Everything is OK")
