@@ -11,5 +11,5 @@ urlpatterns = [
     path('query-type', check_http_query_type, name="check_query_type"),
     path('get-headers', get_headers, name="get_headers"),
     path('raise-error', raise_error_for_fun, name="raise_error"),
-    path('raise-error', AuthorListBaseView.as_view(), name="author_list"),
+    path('author-list', AuthorListBaseView.as_view(), name="author_list"),
 ]
