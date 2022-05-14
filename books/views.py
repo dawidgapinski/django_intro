@@ -75,9 +75,16 @@ class BookCreateView(CreateView):
     form_class = BookForm
     success_url = reverse_lazy("books_list")
 
-def get_success_url(self):
-    return reverse_lazy("book_list")
+    # def get_success_url(self):
+    #     return reverse_lazy("book_list")
 
+class BookUpdateView(UpdateView):
+    template_name = "book_form.html"
+    form_class = BookForm
+    success_url = reverse_lazy("books_list")
+
+    def get_object(self, **kwargs):
+        return get_object_or_404(Book, id=self.kwargs.get("pk"))
 
 
 def get_hello(request: WSGIRequest) -> HttpResponse:
