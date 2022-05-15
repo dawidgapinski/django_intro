@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
@@ -14,6 +15,6 @@ class SignUpView(CreateView):
 class UserLoginView(LoginView):
     template_name = 'login.html'
 
-class UserListView(ListView):
+class UserListView(LoginRequiredMixin, ListView):
     template_name = "user_list.html"
     model = User
